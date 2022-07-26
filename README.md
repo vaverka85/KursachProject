@@ -57,7 +57,8 @@ class Ball:
    
    
    def __init__(self, canvas, paddle, score, color, color_1):
-        # задаём параметры объекта, которые нам передают в скобках в момент создания
+       
+       # задаём параметры объекта, которые нам передают в скобках в момент создания
         self.canvas = canvas
         self.paddle = paddle
         self.score = score
