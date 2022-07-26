@@ -31,15 +31,21 @@ tk.title('Funny ball')
 tk.resizable(0, 0)
 # помещаем наше игровое окно выше остальных окон на компьютере, чтобы другие окна не могли его заслонить.
 tk.wm_attributes('-topmost', 1)
+
 # создаём новый холст — 500 на 600 пикселей
 HEIGHT = 500
 WIDTH = 600
 canvas = Canvas(tk, width=WIDTH, height=HEIGHT, highlightthickness=0)
+
 #задаем определеннный фон на основе ранее найденного изображения:
 game_image = PhotoImage(file = 'D:\KursachProject\Ir4.gif')
 canvas.create_image(0, 0, anchor = NW, image = game_image)
+
+
 # говорим холсту, что у каждого видимого элемента будут свои отдельные координаты
 canvas.pack()
+
+
 # обновляем окно с холстом
 tk.update()
 
@@ -48,33 +54,44 @@ class Ball:
     # конструктор для создания нового объекта на основе этого класса
     def __int__(self, ball):
         self.ball = ball
-    def __init__(self, canvas, paddle, score, color, color_1):
+   
+   
+   def __init__(self, canvas, paddle, score, color, color_1):
         # задаём параметры объекта, которые нам передают в скобках в момент создания
         self.canvas = canvas
         self.paddle = paddle
         self.score = score
+        
         # командой create_oval мы создаём круг радиусом 30 пикселей и закрашиваем нужным цветом
         self.id = canvas.create_oval(10,10, 30, 30, fill=color, outline = color_1)
-        # помещаем шарик в точку с координатами 245,100
+       
+       # помещаем шарик в точку с координатами 245,100
         self.canvas.move(self.id, 245, 100)
+        
         # задаём список возможных направлений для старта
         starts = [-2, -1, 1, 2]
-        # перемешиваем его
+       
+       # перемешиваем его
         random.shuffle(starts)
-        # выбираем первый из перемешанного — это будет вектор движения шарика
+       
+       # выбираем первый из перемешанного — это будет вектор движения шарика
         self.x = starts[0]
-        # уменьшаем значение по оси y,т.к. в самом начале шарик всегда падает вниз
+       
+       # уменьшаем значение по оси y,т.к. в самом начале шарик всегда падает вниз
         self.y = -2
-        # задаем шарику высоту и ширину
+       
+       # задаем шарику высоту и ширину
         self.canvas_height = self.canvas.winfo_height()
         self.canvas_width = self.canvas.winfo_width()
-        # свойство, которое отвечает за то, достиг шарик дна или нет. Пока не достиг, значение будет False
+       
+       # свойство, которое отвечает за то, достиг шарик дна или нет. Пока не достиг, значение будет False
         self.hit_bottom = False
 
     # обрабатываем касание платформы, для этого получаем 4 координаты шарика в переменной pos (левая верхняя и правая нижняя точки)
     def hit_paddle(self, pos):
         # получаем кординаты платформы через объект paddle (платформа)
         paddle_pos = self.canvas.coords(self.paddle.id)
+        
         # если координаты касания совпадают с координатами платформы
         if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
             if pos[3] >= paddle_pos[1] and pos[3] <= paddle_pos[3]:
